@@ -13,6 +13,7 @@ import NotesListPage from "./pages/NotesListPage";
 import NoteEditorPage from "./pages/NoteEditorPage";
 import SettingsPage from "./pages/SettingsPage";
 import ErrorPage from "./pages/ErrorPage";
+import { AuthGuard } from "./guards/AuthGuard";
 
 export const router = createBrowserRouter([
   {
@@ -29,7 +30,11 @@ export const router = createBrowserRouter([
       // Protected routes (we'll guard these)
       {
         path: "notes",
-        element: <NoteLayout />,
+        element: (
+          <AuthGuard>
+            <NoteLayout />
+          </AuthGuard>
+        ),
         children: [
           { index: true, element: <NotesListPage /> },
           { path: ":noteId", element: <NoteEditorPage /> }, // Dynamic route
